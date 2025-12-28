@@ -7,19 +7,31 @@ import type { v1 } from "./v1/interfaces/models.interface.js"
 import "./v1/services/sendEmails.js"
 
 const {
-  DB_NAME,
-  DB_PORT,
-  DB_PASSWORD,
-  DB_USER,
-  DB_HOST
+  PRODUCTION_DB_NAME,
+  PRODUCTION_DB_PORT,
+  PRODUCTION_DB_PASSWORD,
+  PRODUCTION_DB_USER,
+  PRODUCTION_DB_HOST,
+  DEVELOPMENT_DB_NAME,
+  DEVELOPMENT_DB_PORT,
+  DEVELOPMENT_DB_PASSWORD,
+  DEVELOPMENT_DB_USER,
+  DEVELOPMENT_DB_HOST,
+  NODE_ENV
 } = process.env
 
 let connection:Pool
-const connectionUri : string = `mysql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`
+const connectionUri : string = NODE_ENV == "development" 
+? `mysql://${DEVELOPMENT_DB_USER}:${DEVELOPMENT_DB_PASSWORD}@${DEVELOPMENT_DB_HOST}:${DEVELOPMENT_DB_PORT}/${DEVELOPMENT_DB_NAME}`
+: `mysql://${PRODUCTION_DB_USER}:${PRODUCTION_DB_PASSWORD}@${PRODUCTION_DB_HOST}:${PRODUCTION_DB_PORT}/${PRODUCTION_DB_NAME}`
 
 try {
-  connection = await mysql2.createPool(connectionUri)
-  console.log("Bases de datos conectada!")
+connection = mysql2.createPool({
+    uri: connectionUri,
+    ssl: {
+      rejectUnauthorized: false
+    }
+  });
 } catch (err){
   console.log(err)
   process.exit(1)

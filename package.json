@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node dist/server-mysql.js",
+    "start": "CROSS-ENV NODE_ENV=production node dist/server-mysql.js",
     "build": "tsc",
     "dev": "CROSS-ENV NODE_ENV=development tsx watch src/server-mysql.ts"
   },
