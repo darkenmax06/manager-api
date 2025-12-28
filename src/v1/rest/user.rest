@@ -1,0 +1,33 @@
+GET http://localhost:3000/api/v1/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYTQyNWNjMmYtZTFmZC0xMWYwLTliZGItZDQ2ZDZkNmZhMzIzIiwiaWF0IjoxNzY2NzE1OTAyfQ.NUAEnMtatwvAkln4Fe4bKs50BFij4n_kQZHKFbREcAo
+
+###
+
+GET http://localhost:3000/api/v1/users/6a4b754f-e1f0-11f0-9bdb-d46d6d6fa323
+
+###
+
+POST http://localhost:3000/api/v1/users
+Content-Type: application/json
+
+{
+  "name":"JUan",
+  "email": "ramses@gmail.com",
+  "password":"12345678"
+}
+
+###
+
+PATCH  http://localhost:3000/api/v1/users/6a4b754f-e1f0-11f0-9bdb-d46d6d6fa323
+Content-Type: application/json
+
+{
+  "name": "Juano",
+  "email": "ramses@gmail.com",
+  "password": "12345678",
+  "comment_title_name": "Cosa" 
+}
+
+###
+
+DELETE  http://localhost:3000/api/v1/users/61bb2d9c-fb8d-4933-b21b-898ec7c93a7b

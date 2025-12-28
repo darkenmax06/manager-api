@@ -1,0 +1,17 @@
+GET http://localhost:3000/api/v1/comments/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMjc0MDk0YWEtZTIxNy0xMWYwLTliZGItZDQ2ZDZkNmZhMzIzIiwiaWF0IjoxNzY2NzI0OTgwfQ.uh2Ri3ht2OJ98VNWu0pB2OOhegV4JNLg0f7DD81nxD0
+
+###
+POST http://localhost:3000/api/v1/comments/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMjc0MDk0YWEtZTIxNy0xMWYwLTliZGItZDQ2ZDZkNmZhMzIzIiwiaWF0IjoxNzY2NzI0OTgwfQ.uh2Ri3ht2OJ98VNWu0pB2OOhegV4JNLg0f7DD81nxD0
+Content-Type: application/json
+
+{
+  "title":"Ramses Gonzalez",
+  "reply_to": "ramsesgonzalez20066@gmail.com",
+  "comment": "La mejor serie del mundo mundial"
+}
+
+###
+DELETE http://localhost:3000/api/v1/comments/8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMjc0MDk0YWEtZTIxNy0xMWYwLTliZGItZDQ2ZDZkNmZhMzIzIiwiaWF0IjoxNzY2NzI0OTgwfQ.uh2Ri3ht2OJ98VNWu0pB2OOhegV4JNLg0f7DD81nxD0
