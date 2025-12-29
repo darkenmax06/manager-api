@@ -14,10 +14,8 @@ function loginRouter ({userModel}:{userModel: UserModel}){
     try {
       const user = await userModel.getByEmail({email: email.toLowerCase()})
 
-      console.log(user)
 
       const isCorrectPassword = await bcrypt.compare(password,user.password)
-      console.log(isCorrectPassword)
       if (!isCorrectPassword) return next({name: "INVALID_LOGIN"})
 
       const SECRET_KEY = process.env.SECRET_KEY

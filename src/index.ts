@@ -9,12 +9,16 @@ function Server ({connection,v1}:serverProps){
   app.use(cors())
   app.use(express.json())
 
-  app.get("/",(req,res,next)=> {
+  app.get("/",(_,res,next)=> {
     res.json({message: "Api activa!"})
   })
 
   // v1
   app.use("/api/v1",routesV1(v1))
+
+  app.use((req,res)=> {
+    res.status(404).json({error: "Recurso no encontrado"})
+  })
 
   const PORT = process.env.port || 3000
 

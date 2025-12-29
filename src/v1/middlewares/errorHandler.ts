@@ -4,6 +4,7 @@ import type { NextFunction, Request, Response } from "express";
 function errorHandler (err:any,req:Request,res:Response,next:NextFunction) {
   const {name}:{name: string} = err
   console.log(name)
+  console.log(err)
 
   if (process.env.NODE_ENV == "development") console.log(err)
 

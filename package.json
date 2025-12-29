@@ -6,7 +6,8 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production node dist/server-mysql.js",
     "build": "tsc",
-    "dev": "cross-env NODE_ENV=development tsx watch src/server-mysql.ts"
+    "dev": "cross-env NODE_ENV=development tsx watch src/server-mysql.ts",
+    "dev:docker": "cross-env NODE_ENV=production tsx watch src/server-mysql.ts"
   },
   "keywords": [],
   "author": "",

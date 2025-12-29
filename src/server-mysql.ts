@@ -25,13 +25,24 @@ const connectionUri : string = NODE_ENV == "development"
 ? `mysql://${DEVELOPMENT_DB_USER}:${DEVELOPMENT_DB_PASSWORD}@${DEVELOPMENT_DB_HOST}:${DEVELOPMENT_DB_PORT}/${DEVELOPMENT_DB_NAME}`
 : `mysql://${PRODUCTION_DB_USER}:${PRODUCTION_DB_PASSWORD}@${PRODUCTION_DB_HOST}:${PRODUCTION_DB_PORT}/${PRODUCTION_DB_NAME}`
 
+
 try {
-connection = mysql2.createPool({
+  connection = await mysql2.createPool({
     uri: connectionUri,
-    ssl: {
-      rejectUnauthorized: false
-    }
+    
+    // --- CONFIGURACIÓN DE SUPERVIVENCIA ---
+    waitForConnections: true,
+    connectionLimit: 10,       // Ajusta según tu necesidad
+    queueLimit: 0,
+    
+    // 1. Matar conexiones inactivas antes que MySQL lo haga
+    idleTimeout: 60000,        // 60 segundos (cierra conexiones sin uso)
+    
+    // 2. Verificar que la conexión sirva antes de usarla
+    enableKeepAlive: true,     
+    keepAliveInitialDelay: 10000 
   });
+  console.log("DATABASE CONNECTED")
 } catch (err){
   console.log(err)
   process.exit(1)
