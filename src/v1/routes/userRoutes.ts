@@ -32,10 +32,11 @@ function userRouter ({userModel}:{userModel: UserModel}){
     }
   })
 
-  router.post("/",validateCreationUser, async (req,res,next)=> {
+  router.post("/", validateToken ,validateCreationUser, async (req,res,next)=> {
     const {name, email, password}: UserInput = req.body
     const ui= req.headers.user_id as string
 
+    console.log({ui})
 
     try {
       const validateUer = await userModel.getFullUserById({userId: ui})
@@ -51,7 +52,7 @@ function userRouter ({userModel}:{userModel: UserModel}){
     }
   })
 
-  router.patch("/:user_id",validateUpdateUser, async (req,res,next)=> {
+  router.patch("/:user_id", validateToken,validateUpdateUser, async (req,res,next)=> {
     const {user_id} = req.params
     if (!user_id) return next({name: "ID_REQUIRED"})
     const ui= req.headers.user_id as string

@@ -17,6 +17,7 @@ function validateToken (req:Request,res:Response,next: NextFunction){
   try {
     if (!SECRET_KEY) throw {name: "SECRET_KEY_LOST"}
     const {user_id} = jwt.verify(token,SECRET_KEY) as TokenId  
+    console.log({user_id})
     req.headers.user_id = user_id
     next()   
   } catch (err) {
