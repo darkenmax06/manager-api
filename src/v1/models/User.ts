@@ -13,7 +13,7 @@ class Users  {
   }
 
   async getFullUserById ({userId}:UserId): Promise<User> {
-     const [[user]] = await this.connection.query<User[]>("SELECT * FROM parsed_user WHERE user_id = ?",[userId])
+     const [[user]] = await this.connection.query<User[]>("SELECT * FROM Parsed_user WHERE user_id = ?",[userId])
 
      if (!user) throw {name: "USER_NOT_FOUND"}
 
