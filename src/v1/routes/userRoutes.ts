@@ -8,10 +8,13 @@ function userRouter ({userModel}:{userModel: UserModel}){
   const router = Router()
 
   router.get("/", validateToken ,async (req,res,next) => {
+    const {user_id} = req.headers
     try{
+      const user = await userModel.getFullUserById({userId: user_id as string})
+      if (user.role !== "admin") throw {name: "WRONG_CREDENTIALS"}
       const users = await userModel.getAll()
       res.json(users)
-    } catch (err) {
+    } catch (err:any) {
       next(err)
     }
   })
@@ -27,7 +30,7 @@ function userRouter ({userModel}:{userModel: UserModel}){
 
       const user = await userModel.getFullUserById({userId: user_id})
       res.json(user)
-    } catch (err) {
+    } catch (err:any) {
       next(err)
     }
   })
@@ -35,8 +38,6 @@ function userRouter ({userModel}:{userModel: UserModel}){
   router.post("/", validateToken ,validateCreationUser, async (req,res,next)=> {
     const {name, email, password}: UserInput = req.body
     const ui= req.headers.user_id as string
-
-    console.log({ui})
 
     try {
       const validateUer = await userModel.getFullUserById({userId: ui})
@@ -47,8 +48,9 @@ function userRouter ({userModel}:{userModel: UserModel}){
 
       const user = await userModel.create({name,email: email.toLowerCase(),password:passwordHashed})
       res.json(user)
-    }catch (err){
-      return next(err)
+    }catch (err: any){
+      if (err?.code) return next({name: err.code == "ER_DUP_ENTRY" ? "EXISTING_EMAIL" : err.code, ...err})
+        else return next(err)
     }
   })
 
@@ -57,14 +59,13 @@ function userRouter ({userModel}:{userModel: UserModel}){
     if (!user_id) return next({name: "ID_REQUIRED"})
     const ui= req.headers.user_id as string
 
-
     const updates: User = req.body
-
 
     try {
       
       const validateUer = await userModel.getFullUserById({userId: ui})
       if (validateUer.role !== "admin") throw {name: "WRONG_CREDENTIALS"}
+
       const user = await userModel.getFullUserById({userId: user_id})
       if (!user) return next ({name: "INVALID_ID"})
 
@@ -79,15 +80,13 @@ function userRouter ({userModel}:{userModel: UserModel}){
       })
 
       res.json(newUser)
-    }catch (err:any){
-      if (err.code){
-        return next({name: err.code, ...err})
-      }
-      return next(err)
+    }catch (err:any){ 
+      if (err?.code) return next({name: err.code == "ER_DUP_ENTRY" ? "EXISTING_EMAIL" : err.code, ...err})
+      else return next(err)
     }
   })
 
-  router.delete("/:user_id", async (req,res,next)=> {
+  router.delete("/:user_id", validateToken,async (req,res,next)=> {
     const {user_id} = req.params
     if (!user_id) return next({name: "ID_REQUIRED"})
     const ui= req.headers.user_id as string

@@ -1,10 +1,13 @@
 import express from "express"
 import type { serverProps } from "./server.interface.js"
 import cors from "cors"
+import type { Express } from "express"
 import routesV1 from "./v1/routes/routesV1.js"
 
-function Server ({connection,v1}:serverProps){
+function Server ({connection,v1}:serverProps): [Express,number]{
   const app = express()
+
+  app.disable("x-powered-by")
 
   app.use(cors())
   app.use(express.json())
@@ -20,12 +23,9 @@ function Server ({connection,v1}:serverProps){
     res.status(404).json({error: "Recurso no encontrado"})
   })
 
-  const PORT = process.env.port || 3000
+  const PORT = Number(process.env.port) || 3000
 
-  app.listen(PORT, ()=> {
-    console.log("Server is ready")
-    console.log("Server on port: ", PORT)
-  })
+  return [app,PORT]
 }
 
 export {Server}

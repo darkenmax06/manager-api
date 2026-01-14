@@ -50,7 +50,13 @@ class Users  {
     return this.getFullUserById({userId})
   }
 
-  async delete ({userId}:{userId: string}): Promise<boolean>{
+  async delete ({userId}:UserId): Promise<boolean>{
+    const user = await this.getFullUserById({userId})
+
+    if (!user) throw {name: "USER_NOT_FOUND"}
+
+    await this.connection.query<ResultSetHeader>("DELETE FROM Day_appoiment_config WHERE user_id = UUID_TO_BIN(?)",[userId])
+
     const [result] = await this.connection.query<ResultSetHeader>("DELETE FROM Users WHERE user_id = UUID_TO_BIN(?)",[userId])
     if (result.affectedRows < 1 ) throw {name: "USER_NOT_FOUND"}
     return true

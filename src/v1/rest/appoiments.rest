@@ -1,0 +1,47 @@
+POST http://localhost:3000/api/v1/login
+Content-Type: application/json
+
+{
+  "email": "ramsesgonzalez20066@gmail.com",
+  "password": "12345678"
+}
+
+###
+GET http://localhost:3000/api/v1/appoiments/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiOGVjZmI0ZGItZTc0Ni0xMWYwLTliZGItZDQ2ZDZkNmZhMzIzIiwiaWF0IjoxNzY3Mjk1MDcyfQ.O-jEQEPxRgeRArGKomFzOMoGMop9CNL-99FCf5tGNOw
+
+
+###
+GET http://localhost:3000/api/v1/appoiments/01-06-2026
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiM2Q3MzNkZjMtZWFhOC0xMWYwLTkzYzAtZDQ2ZDZkNmZhMzIzIiwiaWF0IjoxNzY3NjczNDQ0fQ.aE1bnOEVeeTSggxDpeXJFkbxHoB2mgyppgQkZBHi4cw
+
+###
+POST http://localhost:3000/api/v1/appoiments/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiM2Q3MzNkZjMtZWFhOC0xMWYwLTkzYzAtZDQ2ZDZkNmZhMzIzIiwiaWF0IjoxNzY3NjczNDQ0fQ.aE1bnOEVeeTSggxDpeXJFkbxHoB2mgyppgQkZBHi4cw
+Content-Type: application/json
+
+{
+  "begin_hour": "12:00:00",
+  "comment":"",
+  "date":"01-20-2026",
+  "finish_hour":"14:00:00",
+  "name":"Ramon gonzalez",
+  "persons": "2",
+  "phone":"8295645225"
+}
+
+###
+
+PATCH  http://localhost:3000/api/v1/appoiments/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiOTM1M2RjZjAtYWE4NS00N2RkLTliNWMtMjg0MWEzMjAyYjM5IiwiaWF0IjoxNzY3Mjk2Nzg4fQ.9mbFRagAzxfU6F70hEim8V0j7yI3NzovGLIHqzzhve8
+Content-Type: application/json
+
+{
+  "begin_hour": "10:00:00",
+  "comment":"",
+  "date":"11-16-2025",
+  "finish_hour":"10:45:00",
+  "name":"RAYMOND gonzalez",
+  "persons": 24,
+  "phone":"8295645225"
+}

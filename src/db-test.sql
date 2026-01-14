@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS Mails;
-CREATE DATABASE Mails;
+DROP DATABASE IF EXISTS Mails_test;
+CREATE DATABASE Mails_test;
 
-USE Mails;
+USE Mails_test;
 
 CREATE TABLE Users (
 	user_id BINARY(16) PRIMARY KEY DEFAULT ( UUID_TO_BIN( UUID() ) ),
@@ -39,36 +39,31 @@ CREATE TABLE Appoiments (
     name VARCHAR(100) NOT NULL,
     phone VARCHAR(15) NOT NULL ,
     date DATE NOT NULL,
-    begin_hour VARCHAR(8) NOT NULL,
-    finish_hour VARCHAR(8) NOT NULL,
+    begin_hour TIME NOT NULL,
+    finish_hour TIME NOT NULL,
     comment VARCHAR(300),
-    persons INT NOT NULL DEFAULT (1),
+    persons INT NOT NULL DEFAULT(1),
     user_id BINARY(16) NOT NULL,
     creation_date TIMESTAMP DEFAULT (CURRENT_TIMESTAMP())
 );
-
-DELIMITER $
 
 CREATE TRIGGER Day_appoiment_user
 AFTER INSERT ON Users
 FOR EACH ROW
 BEGIN
 	INSERT INTO Day_appoiment_config (day,work,begin_hour,finish_hour,user_id,day_index) VALUES 
-    ("lun",TRUE,"08:00:00","17:00:00",NEW.user_id,1),
-    ("mar",TRUE,"08:00:00","17:00:00",NEW.user_id,2),
-    ("mie",TRUE,"08:00:00","17:00:00",NEW.user_id,3),
-    ("jue",TRUE,"08:00:00","17:00:00",NEW.user_id,4),
-    ("vie",TRUE,"08:00:00","17:00:00",NEW.user_id,5),
-    ("sab",TRUE,"08:00:00",12,NEW.user_id,6),
+    ("lun",TRUE,8,17,NEW.user_id,1),
+    ("mar",TRUE,8,17,NEW.user_id,2),
+    ("mie",TRUE,8,17,NEW.user_id,3),
+    ("jue",TRUE,8,17,NEW.user_id,4),
+    ("vie",TRUE,8,17,NEW.user_id,5),
+    ("sab",TRUE,8,12,NEW.user_id,6),
     ("dom",FALSE,0,0,NEW.user_id,0);
-END$
+END;
 
-
-DELIMITER ;
-
-CREATE VIEW Parsed_user AS (SELECT BIN_TO_UUID(user_id) user_id, name, email,role,creation_date,comment_title_name FROM Users);
-CREATE VIEW Parsed_comment AS (SELECT title, reply_to,comment, comment_id,creation_date, BIN_TO_UUID(user_id) user_id FROM Comments);
-CREATE VIEW Parsed_appoiment AS (SELECT appoiment_id, name, phone, date , begin_hour, finish_hour, comment, persons, BIN_TO_UUID(user_id) user_id, creation_date  FROM Appoiments);
+CREATE VIEW Parsed_user AS SELECT BIN_TO_UUID(user_id) user_id, name, email, role, creation_date,comment_title_name FROM Users;
+CREATE VIEW Parsed_comment AS SELECT title, reply_to,comment, comment_id,creation_date, BIN_TO_UUID(user_id) user_id FROM Comments;
+CREATE VIEW Parsed_appoiment AS SELECT appoiment_id, name, phone, date , begin_hour, finish_hour, comment, persons, BIN_TO_UUID(user_id) user_id, creation_date  FROM Appoiments;
 
 CREATE UNIQUE INDEX Appoiment_date_and_hours ON Appoiments (date,begin_hour,user_id);
 

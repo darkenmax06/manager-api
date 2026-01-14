@@ -1,3 +1,22 @@
+
+POST http://localhost:3000/api/v1/login
+Content-Type: application/json
+
+{
+  "email": "ramsesgonzalez20066@gmail.com",
+  "password": "12345678"
+}
+###
+POST http://localhost:3000/api/v1/login
+Content-Type: application/json
+
+{
+  "email": "enmanuelcpp@gmail.com",
+  "password": "12345678"
+}
+
+
+###
 GET http://localhost:3000/api/v1/users
 ###
 
@@ -6,11 +25,11 @@ GET http://localhost:3000/api/v1/users/6a4b754f-e1f0-11f0-9bdb-d46d6d6fa323
 
 POST http://localhost:3000/api/v1/users
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZjYzYWQzOWEtZTQ0Mi0xMWYwLWI3MjUtY2VjZDAyYzgxMmQ1IiwiaWF0IjoxNzY2OTY4MDQ2fQ.Wf9SaGYrkwU3Ppjf51GVCkiFXv8wk6ogDDwiufQjC04
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNTYxZjcwY2YtZTc0OS0xMWYwLTliZGItZDQ2ZDZkNmZhMzIzIiwiaWF0IjoxNzY3Mjk2NzA0fQ.GUsRJJEFBrDp6u7XgwmwoJNZmvfypoX8ZAJq63ovFDI
 
 {
-  "name":"JUan",
-  "email": "ramses@gmail.com",
+  "name":"ransiel",
+  "email": "enmanuelcpp@gmail.com",
   "password":"12345678"
 }
 ###

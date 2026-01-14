@@ -1,6 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
 
-
 function errorHandler (err:any,req:Request,res:Response,next:NextFunction) {
   const {name}:{name: string} = err
   console.log(name)
@@ -21,11 +20,21 @@ function errorHandler (err:any,req:Request,res:Response,next:NextFunction) {
     },
     "ER_WRONG_VALUE_FOR_TYPE": ()=> res.status(404).json({error: "La uuid proporcionada no es valida"}),
     "ID_REQUIRED": ()=> res.status(400).json({error: "La id es requerida para realizar esta accion"}),
+    "DATE_REQUIRED": ()=> res.status(400).json({error: "la fecha es necesaria para realizar esta accion"}),
+    "EXISTING_EMAIL": ()=> res.status(400).json({error: "Ya existe un usuario con este email"}),
+    "INVALID_HOURS": () => res.status(400).json({error: "El formato de las horas no es valido o la hora de final es menor a la hora de inicio."}),
     "INVALID_LOGIN": ()=> res.status(400).json({error: "El email o la contraseña proporcionadas no son validos"}),
-    "TOKEN_REQUIRED": ()=> res.status(400).json({error: "El token de acceso es necesario para realizar esta accion"}),
-    "WRONG_CREDENTIALS": ()=> res.status(400).json({error: "No tienes los permisos necesarios para realizar esta accion"}),
+    "INVALID_DATE": ()=> res.status(400).json({error: `El formato de la fecha ${err.date} no es valido. El formato adminito es MM-DD-AAAA`}),
+    "TOKEN_REQUIRED": ()=> res.status(401).json({error: "El token de acceso es necesario para realizar esta accion"}),
+    "WRONG_CREDENTIALS": ()=> res.status(401).json({error: "No tienes los permisos necesarios para realizar esta accion"}),
     "MAIL_NO_SEND": ()=> res.status(400).json({error: "No se pudo enviar el email"}),
-    "SECRET_KEY_LOST": ()=> res.status(400).json({error: "LLave secreta no encontrada, contactate con el proveedor de servicio"})
+    "APPOIMENT_ALREADY_EXITS": ()=> res.status(400).json({error: "Ya existe una cita agendada en esa fecha."}),
+    "SECRET_KEY_LOST": ()=> res.status(400).json({error: "LLave secreta no encontrada, contactate con el proveedor de servicio"}),
+    "USER_NOT_AUTHORIZATED": ()=> res.status(401).json({error: "El usuario no puede realizar esta accion"}),
+    "JsonWebTokenError": ()=> {
+      if (err.message === "jwt malformed") return res.status(401).json({error: "El token de acceso es invalido"})
+      return res.status(401).json({error: "No tienes los permisos necesarios para realizar esta accion"})
+    }
   }
 
   

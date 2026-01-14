@@ -1,0 +1,28 @@
+
+POST http://localhost:3000/api/v1/login
+Content-Type: application/json
+
+{
+  "email": "ramsesgonzalez20066@gmail.com",
+  "password": "12345678"
+}
+
+
+###
+GET http://localhost:3000/api/v1/appoiments/config
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNGEwZDU4YTQtZTc0Yi0xMWYwLTliZGItZDQ2ZDZkNmZhMzIzIiwiaWF0IjoxNzY3NjQyNTI2fQ._VhN61fx0_ebiGWqyC22lm7OeZXw3UvujOJkmO_wXhQ
+
+
+###
+
+PATCH http://localhost:3000/api/v1/appoiments/config/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiM2JiMGRhYzItZWE5Ni0xMWYwLTkzYzAtZDQ2ZDZkNmZhMzIzIiwiaWF0IjoxNzY3NjU5MTY4fQ.ONama0vpudJmYRdt86aJQDCdpUtsyAQhYnX_KTytjYQ
+
+{
+    "day": "lun",
+    "day_index": 1,
+    "work": 0,
+    "begin_hour": "08:00:00",
+    "finish_hour": "17:00:00"
+}

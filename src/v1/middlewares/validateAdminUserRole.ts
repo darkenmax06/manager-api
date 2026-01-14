@@ -2,7 +2,7 @@ import type { NextFunction,Request,Response } from "express";
 import jwt from "jsonwebtoken"
 import type { TokenId } from "../interfaces/models.interface.js";
 
-function validateToken (req:Request,res:Response,next: NextFunction){
+async function validateAdminUserRole (req:Request,res:Response,next: NextFunction){
   const {authorization} = req.headers 
   const {SECRET_KEY} = process.env
 
@@ -17,11 +17,13 @@ function validateToken (req:Request,res:Response,next: NextFunction){
   try {
     if (!SECRET_KEY) throw {name: "SECRET_KEY_LOST"}
     const {user_id} = jwt.verify(token,SECRET_KEY) as TokenId  
-    req.headers.user_id = user_id
+
+    const user = await
+    req.headers.user = user
     next()   
   } catch (err) {
     next(err)
   }
 }
 
-export default validateToken
+export default validateAdminUserRole

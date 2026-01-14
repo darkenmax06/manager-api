@@ -28,9 +28,11 @@ function commentRouter ({commentModel,userModel}: {commentModel: CommentModel,us
     try {
       const user = await userModel.getFullUserById({userId: user_id})
       const newComment = await commentModel.create({title,comment,reply_to: reply_to.toLowerCase(),user_id: user_id})
+
       const [text,html] = writeEmailComment(user.comment_title_name,title , reply_to ,comment)
       const result = await sendEmails(user.email,title,reply_to,text,html)
       if (!result) throw {name: "MAIL_NO_SEND"}
+      
       res.json(newComment)
     } catch (err){
       next(err)
@@ -45,7 +47,7 @@ function commentRouter ({commentModel,userModel}: {commentModel: CommentModel,us
     if (typeof user_id != "string") return next ({name: 'TOKEN_REQUIRED'})
 
     try {  
-      await commentModel.delete({commentId: parseInt(comment_id)})
+      await commentModel.delete({commentId: parseInt(comment_id),user_id})
       res.status(204).send()
     } catch (err){
       next(err)
